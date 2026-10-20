@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CleanYourTV — Samsung Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="css/dashboard.css">
+
+    <!-- Samsung Smart TV Legacy Common APIs (loaded by TV engine when running as User App) -->
+    <script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/API/Widget.js"></script>
+    <script type="text/javascript" language="javascript" src="$MANAGER_WIDGET/Common/API/TVKeyValue.js"></script>
+</head>
+<body>
+
+    <!-- Dynamic Atmosphere Background Gradient -->
+    <div id="sky-atmosphere" class="sky-night"></div>
+
+    <!-- Safe TV Margin Container (Overscan Protection) -->
+    <div class="tv-safe-zone">
+
+        <!-- Top Header & Status Badges -->
+        <div class="tv-header">
+            <div class="tv-greeting-box">
+                <h1 id="tv-greeting">Good Evening, Edris</h1>
+                <p>Geelong, Victoria &bull; Australia</p>
+            </div>
+            <div class="tv-pill-group">
+                <div class="tv-pill tv-pill-active">
+                    <span class="tv-pill-dot"></span>PS5 &bull; HDMI 1
+                </div>
+                <div class="tv-pill">
+                    Anynet+ CEC Active
+                </div>
+            </div>
+        </div>
+
+        <!-- Centerpiece: Minimalist Clock & Date -->
+        <div class="tv-hero">
+            <div id="tv-clock-time" class="tv-clock">12:00<span class="tv-clock-seconds"> AM</span></div>
+            <div id="tv-date" class="tv-date">Loading date...</div>
+        </div>
+
+        <!-- 4-Card Interactive Deck (D-Pad Navigable) -->
+        <div class="tv-deck">
+
+            <!-- Card 0: Geelong Weather -->
+            <div id="card-weather" class="tv-card tv-focusable" tabindex="0" onclick="window.selectCard(0)">
+                <div>
+                    <div class="card-title">
+                        <span>Geelong Weather</span>
+                        <span class="card-badge">LIVE</span>
+                    </div>
+                    <div class="weather-main">
+                        <span id="weather-temp-val" class="weather-temp">--</span>
+                        <span class="weather-unit">&deg;C</span>
+                    </div>
+                    <div id="weather-cond-val" class="weather-condition">Updating...</div>
+                </div>
+                <div class="weather-stats">
+                    <div id="weather-high-low">High: --&deg; / Low: --&deg;</div>
+                    <div id="weather-extra">Connecting to weather feed...</div>
+                </div>
+            </div>
+
+            <!-- Card 1: PS5 Gaming Session Timer -->
+            <div id="card-timer" class="tv-card tv-focusable" tabindex="0" onclick="window.selectCard(1)">
+                <div>
+                    <div class="card-title">
+                        <span>PS5 Session Timer</span>
+                        <span class="card-badge">GAMING</span>
+                    </div>
+                    <div id="timer-val" class="timer-display">00:00:00</div>
+                    <div class="timer-hint">Press [ENTER] to Start / Pause</div>
+                </div>
+                <div class="timer-controls">
+                    <button id="timer-btn-toggle" class="timer-btn" onclick="event.stopPropagation(); window.toggleTimer();">Start</button>
+                    <button id="timer-btn-reset" class="timer-btn" onclick="event.stopPropagation(); window.resetTimer();">Reset</button>
+                </div>
+            </div>
+
+            <!-- Card 2: Quick Web Shortcuts -->
+            <div id="card-shortcuts" class="tv-card tv-focusable" tabindex="0" onclick="window.selectCard(2)">
+                <div>
+                    <div class="card-title">
+                        <span>Quick Shortcuts</span>
+                        <span class="card-badge">WEB</span>
+                    </div>
+                    <div class="shortcuts-list">
+                        <div class="shortcut-item is-selected">
+                            <span>YouTube</span>
+                            <span class="shortcut-tag">Video</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <span>Twitch</span>
+                            <span class="shortcut-tag">Streams</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <span>Reddit</span>
+                            <span class="shortcut-tag">Community</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="weather-stats" style="margin-top: 10px;">
+                    <span>Press [ENTER] to launch</span>
+                </div>
+            </div>
+
+            <!-- Card 3: System Status & Notes -->
+            <div id="card-notes" class="tv-card tv-focusable" tabindex="0" onclick="window.selectCard(3)">
+                <div>
+                    <div class="card-title">
+                        <span>TV Status &amp; Notes</span>
+                        <span class="card-badge">TH01</span>
+                    </div>
+                    <div class="notes-content">
+                        <div class="notes-item">
+                            <span class="notes-bullet"></span>
+                            <span>Model: Samsung UA65HU7200W</span>
+                        </div>
+                        <div class="notes-item">
+                            <span class="notes-bullet"></span>
+                            <span>Firmware: 1290 (Optimized)</span>
+                        </div>
+                        <div class="notes-item">
+                            <span class="notes-bullet"></span>
+                            <span>Display: 65&Prime; Curved 4K UHD</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="notes-status" class="weather-stats">
+                    <span>CleanYourTV Custom Experience</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Bottom Remote Navigation Hint Bar -->
+        <div class="tv-footer">
+            <div class="remote-hints">
+                <span><span class="key-badge">&larr; &rarr;</span> Navigate Cards</span>
+                <span><span class="key-badge">ENTER</span> Activate / Toggle</span>
+                <span><span class="key-badge">RETURN</span> Back / Reset Focus</span>
+            </div>
+            <div class="build-credit">
+                CleanYourTV &bull; Samsung Legacy Edition
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Application Script -->
+    <script type="text/javascript" src="js/main.js"></script>
+</body>
+</html>

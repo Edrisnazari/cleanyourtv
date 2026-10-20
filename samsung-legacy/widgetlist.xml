@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rsp stat="ok">
+    <list>
+        <widget id="CleanYourTV">
+            <title>CleanYourTV</title>
+            <compression size="10519" type="zip"/>
+            <description>CleanYourTV Dashboard</description>
+            <download>http://192.168.1.107:8000/widget/CleanYourTV.zip</download>
+        </widget>
+    </list>
+</rsp>

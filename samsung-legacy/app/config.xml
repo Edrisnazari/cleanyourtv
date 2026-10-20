@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget>
+    <widgetname>CleanYourTV</widgetname>
+    <description>Clean, personalized TV dashboard inspired by CleanYourTV</description>
+    <width>1280</width>
+    <height>720</height>
+    <author>
+        <name>Edris</name>
+        <email></email>
+        <link></link>
+    </author>
+    <type>user</type>
+</widget>

@@ -1,0 +1,408 @@
+/* CleanYourTV — 2014 Samsung Legacy Smart TV Dashboard
+   Engine: WebKit 537.42 (Conservative CSS without modern Grid/Variables dependency) */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #050608;
+    color: #f1f5f9;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.4;
+}
+
+/* Background Atmosphere / Time of Day Glow */
+#sky-atmosphere {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    pointer-events: none;
+    transition: opacity 1.5s ease-in-out;
+}
+
+.sky-night {
+    background: radial-gradient(circle at 50% 0%, rgba(14, 116, 144, 0.25) 0%, rgba(15, 23, 42, 0.4) 40%, rgba(5, 6, 8, 1) 85%);
+}
+
+.sky-dusk {
+    background: radial-gradient(circle at 50% 0%, rgba(124, 58, 237, 0.25) 0%, rgba(30, 27, 75, 0.4) 40%, rgba(5, 6, 8, 1) 85%);
+}
+
+.sky-day {
+    background: radial-gradient(circle at 50% 0%, rgba(2, 132, 199, 0.22) 0%, rgba(15, 23, 42, 0.35) 40%, rgba(5, 6, 8, 1) 85%);
+}
+
+.sky-dawn {
+    background: radial-gradient(circle at 50% 0%, rgba(217, 119, 6, 0.22) 0%, rgba(41, 37, 36, 0.35) 40%, rgba(5, 6, 8, 1) 85%);
+}
+
+/* TV Safe Zone Padding (Protection against overscan on older panels) */
+.tv-safe-zone {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    padding: 36px 54px;
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    -webkit-flex-direction: column;
+    justify-content: space-between;
+    -webkit-justify-content: space-between;
+}
+
+/* Top Navigation Bar */
+.tv-header {
+    display: flex;
+    display: -webkit-flex;
+    justify-content: space-between;
+    -webkit-justify-content: space-between;
+    align-items: center;
+    -webkit-align-items: center;
+    padding-bottom: 12px;
+}
+
+.tv-greeting-box h1 {
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    color: #ffffff;
+}
+
+.tv-greeting-box p {
+    font-size: 14px;
+    color: #38bdf8;
+    margin-top: 2px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.tv-pill-group {
+    display: flex;
+    display: -webkit-flex;
+    gap: 12px;
+}
+
+.tv-pill {
+    background: rgba(30, 41, 59, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 13px;
+    color: #cbd5e1;
+    display: inline-flex;
+    display: -webkit-inline-flex;
+    align-items: center;
+    -webkit-align-items: center;
+    margin-left: 8px;
+}
+
+.tv-pill-active {
+    border-color: rgba(56, 189, 248, 0.5);
+    color: #e0f2fe;
+    background: rgba(14, 116, 144, 0.4);
+}
+
+.tv-pill-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #10b981;
+    margin-right: 8px;
+    display: inline-block;
+    box-shadow: 0 0 8px #10b981;
+}
+
+/* Center Hero Section: Clean Clock & Date */
+.tv-hero {
+    text-align: center;
+    margin: 8px 0 20px 0;
+}
+
+.tv-clock {
+    font-size: 88px;
+    font-weight: 200;
+    line-height: 1;
+    color: #ffffff;
+    letter-spacing: -2px;
+    text-shadow: 0 0 35px rgba(255, 255, 255, 0.2);
+}
+
+.tv-clock-seconds {
+    font-size: 38px;
+    color: #64748b;
+    margin-left: 4px;
+    font-weight: 300;
+}
+
+.tv-date {
+    font-size: 20px;
+    color: #94a3b8;
+    margin-top: 6px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+}
+
+/* Main Cards Grid */
+.tv-deck {
+    display: flex;
+    display: -webkit-flex;
+    justify-content: space-between;
+    -webkit-justify-content: space-between;
+    gap: 20px;
+    width: 100%;
+    flex: 1;
+    -webkit-flex: 1;
+    margin-bottom: 16px;
+}
+
+.tv-card {
+    background: rgba(18, 24, 38, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 20px 22px;
+    flex: 1;
+    -webkit-flex: 1;
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    -webkit-flex-direction: column;
+    justify-content: space-between;
+    -webkit-justify-content: space-between;
+    position: relative;
+    transition: transform 0.18s ease-out, border-color 0.18s ease-out, box-shadow 0.18s ease-out, background 0.18s ease-out;
+    -webkit-transition: -webkit-transform 0.18s ease-out, border-color 0.18s ease-out, box-shadow 0.18s ease-out, background 0.18s ease-out;
+}
+
+/* TV Remote Focus State (High Visibility) */
+.tv-focusable {
+    cursor: pointer;
+    outline: none;
+}
+
+.tv-card.is-focused,
+.tv-focusable.is-focused,
+.tv-card:focus {
+    border-color: #38bdf8;
+    background: rgba(27, 38, 59, 0.95);
+    box-shadow: 0 0 28px rgba(56, 189, 248, 0.45);
+    transform: translateY(-4px) scale(1.02);
+    -webkit-transform: translateY(-4px) scale(1.02);
+    z-index: 10;
+}
+
+.card-title {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #94a3b8;
+    margin-bottom: 12px;
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+    -webkit-align-items: center;
+    justify-content: space-between;
+    -webkit-justify-content: space-between;
+}
+
+.card-badge {
+    font-size: 11px;
+    background: rgba(56, 189, 248, 0.15);
+    color: #38bdf8;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+/* Weather Card Details */
+.weather-main {
+    display: flex;
+    display: -webkit-flex;
+    align-items: baseline;
+    -webkit-align-items: baseline;
+    margin: 6px 0;
+}
+
+.weather-temp {
+    font-size: 54px;
+    font-weight: 300;
+    color: #ffffff;
+    line-height: 1;
+}
+
+.weather-unit {
+    font-size: 24px;
+    color: #38bdf8;
+    margin-left: 4px;
+}
+
+.weather-condition {
+    font-size: 18px;
+    color: #cbd5e1;
+    font-weight: 500;
+    margin-bottom: 6px;
+}
+
+.weather-stats {
+    font-size: 13px;
+    color: #64748b;
+    line-height: 1.6;
+}
+
+.weather-stats span {
+    color: #94a3b8;
+    margin-right: 12px;
+}
+
+/* PS5 Session Timer Card */
+.timer-display {
+    font-size: 46px;
+    font-weight: 300;
+    font-family: "Courier New", Courier, monospace;
+    letter-spacing: 2px;
+    color: #38bdf8;
+    margin: 8px 0;
+    text-shadow: 0 0 15px rgba(56, 189, 248, 0.35);
+}
+
+.timer-controls {
+    display: flex;
+    display: -webkit-flex;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.timer-btn {
+    flex: 1;
+    -webkit-flex: 1;
+    padding: 8px 0;
+    border-radius: 8px;
+    background: rgba(30, 41, 59, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #f1f5f9;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.timer-btn.active {
+    background: #0284c7;
+    border-color: #38bdf8;
+    color: #ffffff;
+}
+
+.timer-hint {
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 8px;
+}
+
+/* Shortcuts Card */
+.shortcuts-list {
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    -webkit-flex-direction: column;
+    gap: 8px;
+}
+
+.shortcut-item {
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+    -webkit-align-items: center;
+    justify-content: space-between;
+    -webkit-justify-content: space-between;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    color: #e2e8f0;
+    font-size: 13px;
+    text-decoration: none;
+}
+
+.shortcut-item.is-selected {
+    background: rgba(56, 189, 248, 0.2);
+    border-color: #38bdf8;
+    color: #ffffff;
+}
+
+.shortcut-tag {
+    font-size: 10px;
+    color: #94a3b8;
+    text-transform: uppercase;
+}
+
+/* System Notes / Agenda Card */
+.notes-content {
+    font-size: 13px;
+    color: #cbd5e1;
+    line-height: 1.6;
+}
+
+.notes-item {
+    display: flex;
+    display: -webkit-flex;
+    align-items: baseline;
+    -webkit-align-items: baseline;
+    margin-bottom: 6px;
+}
+
+.notes-bullet {
+    width: 6px;
+    height: 6px;
+    background: #38bdf8;
+    border-radius: 50%;
+    margin-right: 8px;
+    flex-shrink: 0;
+    -webkit-flex-shrink: 0;
+}
+
+/* Bottom Hint / Dock Bar */
+.tv-footer {
+    display: flex;
+    display: -webkit-flex;
+    justify-content: space-between;
+    -webkit-justify-content: space-between;
+    align-items: center;
+    -webkit-align-items: center;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 13px;
+    color: #64748b;
+}
+
+.remote-hints {
+    display: flex;
+    display: -webkit-flex;
+    gap: 16px;
+}
+
+.key-badge {
+    background: rgba(255, 255, 255, 0.1);
+    color: #f1f5f9;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-right: 4px;
+}
+
+.build-credit {
+    color: #475569;
+    font-size: 12px;
+}
